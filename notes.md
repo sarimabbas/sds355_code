@@ -1,4 +1,4 @@
-# ISLR book
+# SDS 355 Notes 
 
 ## Linear Regression
 
@@ -12,7 +12,7 @@
 
 We need to see how well B~1~ and B~0~ do under repeated sampling 
 
-z
+
 
 ![image-20190913160044822](notes.assets/image-20190913160044822.png)
 
@@ -276,15 +276,154 @@ Y = b0 +  (b1 * snow) *   (b2 * tmax) *  (b3*
 
 
 
+## Naive Bayes
+
+### Bayes theorem 
+
+
+
+### Naive Bayes classifier
+
+
+
+P(category | features) 
+
+e.g. P(walks | X) = P(walks | age, salary)
+
+
+
+Here X is the list of features = [age value, salary value]
+
+
+
+![image-20190917173558876](notes.assets/image-20190917173558876.png)
+
+
+
+* The prior is easiest to calculate 
+* Marginal likelihood is the next easiest to calculate 
+
+
+
+You do the same to find P(Drives | X)
+
+Once you have both probabilities, you determine which class to put the data point in. 
+
+
+
+### Calculating priors
+
+
+
+Easy, just take all the data points that are in a class and divide by the total  number of points 
+
+
+
+### Calculating marginal likelihood
+
+No point will have the exact same feattures, so you can set a tthreshold instead:
+
+
+
+![image-20190917175927610](notes.assets/image-20190917175927610.png)
+
+
+
+Here the grey circle has a center, which is where the new point would go. 
+
+The radius is the threshold of similar points to include.
+
+
+
+So there are 4 points out of 30 points total that have a similar features
+
+
+
+Hence P(X) = 4/30
+
+![image-20190917180107626](notes.assets/image-20190917180107626.png)
+
+
+
+### Calculating likelihood
+
+
+
+**P(X | walks)**
+
+
+
+You know there are only 4 points that are similar to X
+
+The conditional probability is on the **walks** class in red, of which there are 10 points
+
+
+
+So, given the 10 points in the **walks** class, how many points are similar to X?
+
+
+
+That's just 3/10 
+
+![image-20190917180348949](notes.assets/image-20190917180348949.png)
 
 
 
 
 
+### Posterior probability
 
 
 
+![image-20190917180410547](notes.assets/image-20190917180410547.png)
 
+
+
+P(Drives | X) turns out to be 0.25 
+
+
+
+So we can guess that the new data point, with similar features X, should be in the **walks** class
+
+
+
+### Why Naive?
+
+
+
+Requires some independence assumptions which are part of the Bayes theorem
+
+E.g. we assume Age and Salary are independent, but there might be correlation bettween theme
+
+I.e. the **features are assumed to be independent of each other**
+
+
+
+### Dropping marginal likelihood
+
+
+
+- **P(X)**: points deemed to be similar to the point we are about to add into the data set
+- P(X) doesnt change, whether you calculate it in the step for P(Walks | X) or for P(Drives | X)
+- At the end of the day you divide both expressions by it
+- so you can drop it! but only **for comparison purposes**. Calculating actual value requires the full expression though
+
+
+
+### More than 2 classes 
+
+
+
+- In current example, you had P(class 1 | X) and P(class 2 | X), where class 1 = walks, and class 2 = drives. The probabilities added up to 1.0 e.g. 0.75 + 0.25 = 1.0 
+- For more than 2 classes, you can do calculations in the same way, and P(class 1 | X) + P(class 2 | X) + P(class 3 | X) = 1.0
+
+
+
+### Python code
+
+https://www.udemy.com/machinelearning/learn/lecture/5740200#overview
+
+![image-20190917182521923](notes.assets/image-20190917182521923.png)  
 
 
 
