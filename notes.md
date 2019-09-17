@@ -268,27 +268,11 @@ Y = b0 +  (b1 * snow) *   (b2 * tmax) *  (b3*
 
 
 
+## KNN
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![0*5OA0zZ_L7_IK5F48](notes.assets/0*5OA0zZ_L7_IK5F48.png)
 
 
 
