@@ -1,6 +1,10 @@
 # SDS 355 Notes 
 
-## Linear Regression
+
+
+## Regression 
+
+### Linear Regression
 
 * Predictor variable: a predictor variable is like an X in the linear regression equation
 * RSS is the residual sum of squares
@@ -8,7 +12,7 @@
 
 
 
-### Standard error of estimates
+#### Standard error of estimates
 
 We need to see how well B~1~ and B~0~ do under repeated sampling 
 
@@ -37,13 +41,11 @@ The 95% confidence interval:
 
 
 
+#### R^2^ and Correlation
 
 
 
-
-
-
-### R^2^ and Correlation
+The meaning of the R-squared statistic is the proportion of the variance **in the response variable of the data used to train the model**that is explained by the model. While you can calculate this statistic for a test dataset, it has no such meaning. The fact that this homework problem gives a negative answer, and that a meaningful R-squared is between 0 and 1, attests to this fact. 
 
 
 
@@ -57,11 +59,9 @@ R^2^ is the squared correlation of sample data (for linear models)
 
 
 
-### Categorical to Numerical Data
+#### Categorical to Numerical Data
 
-
-
-####  Integer Encoding
+##### Integer Encoding
 
 As a first step, each unique category value is assigned an integer value.
 
@@ -75,7 +75,7 @@ The integer values have a natural ordered relationship between each other and ma
 
 For example, ordinal variables like the “place” example above would be a good example where a label encoding would be sufficient.
 
-#### One-Hot Encoding
+##### One-Hot Encoding
 
 For categorical variables where no such ordinal relationship exists, the integer encoding is not enough.
 
@@ -95,9 +95,7 @@ For example:
 
 The binary variables are often called “dummy variables” in other fields, such as statistics.
 
-
-
-## Multiple Linear Regression
+### Multiple Linear Regression
 
 * The **ideal** scenario is if all the predictors are **uncorrelated** - this is called a **balanced design**
 * Correlations amongst predictors cause problems 
@@ -138,7 +136,7 @@ The binary variables are often called “dummy variables” in other fields, suc
 
         
 
-### F-statistic
+#### F-statistic
 
 
 
@@ -149,20 +147,18 @@ The binary variables are often called “dummy variables” in other fields, suc
 
 
 
+#### Deciding on best variables
 
 
-### Deciding on best variables
 
-**All subsets / best subsets regression**
+##### All subsets / best subsets regression
 
 
 
 * Compute the least squares fit for all possible subsets, and then choose between them based on some criterion that balances training error with model size.
 * There are 2^p^ subsets, where *p* is the number of predictors, this can become very large
 
-
-
-#### Forward selection 
+##### Forward selection 
 
 * Keep adding one variable at a time, which best improves the RSS
 
@@ -172,9 +168,7 @@ The binary variables are often called “dummy variables” in other fields, suc
 
 * Stop when all variables have a p-value below some threshold. 
 
-
-
-#### Backward selection
+##### Backward selection
 
 
 
@@ -183,6 +177,34 @@ The binary variables are often called “dummy variables” in other fields, suc
 
 
 * Remove the variable with the least significant t-statistic
+
+
+
+#### Synergy or Interaction effects
+
+Suppose spending money on radio advertsiing actually increases effectiveness of radio advertising. 
+
+![image-20190913165234460](notes.assets/image-20190913165234460.png)
+
+
+
+A way to check this is by multiplying the two predictors to create a new one. 
+
+
+
+The rearranged equation is saying: when radio changes, the coefficient of TV changes by amount: $(B_1 +B_3)* radio$
+
+![image-20190913165429289](notes.assets/image-20190913165429289.png)
+
+And we can see the interaction is significant, because **TV*radio** t-stat is high, and p-value is low. 
+
+
+
+The R^2^ for the model also increased as a result. More variance was explained by adding that extra predictor.
+
+
+
+Continue watching the video at this point: 5:45: https://youtu.be/IFzVxLv0TKQ?t=345
 
 
 
@@ -220,31 +242,130 @@ ISLR says: **have one fewer dummy variable than the number of categorical states
 
 
 
-### Synergy or Interaction effects
+### Decision Tree Regression
 
-Suppose spending money on radio advertsiing actually increases effectiveness of radio advertising. 
-
-![image-20190913165234460](notes.assets/image-20190913165234460.png)
+* A Non-linear, Non-continuous regression model 
 
 
 
-A way to check this is by multiplying the two predictors to create a new one. 
+#### Intuition
 
 
 
-The rearranged equation is saying: when radio changes, the coefficient of TV changes by amount: (B~1~ +B~3~)* radio.
-
-![image-20190913165429289](notes.assets/image-20190913165429289.png)
-
-And we can see the interaction is significant, because **TV*radio** t-stat is high, and p-value is low. 
+* CART: classification and regression trees 
 
 
 
-The R^2^ for the model also increased as a result. More variance was explained by adding that extra predictor.
+* Imagine two predictors on the x and y axis, and you have to predict the dependent variable $y$ on the z-axis
+
+![image-20190930165024377](notes.assets/image-20190930165024377.png)
 
 
 
-Continue watching the video at this point: 5:45: https://youtu.be/IFzVxLv0TKQ?t=345
+* The algorithm will create tree-like splits
+    * This is based on information entropy 
+    * the algorithm stops when an information entropy threshold is met and no more splits are created or if there is a minimum leaf size 
+
+![image-20190930165301271](notes.assets/image-20190930165301271.png)
+
+
+
+* Example decision tree. Each node is testing points against the splits:
+
+
+
+![image-20190930165554342](notes.assets/image-20190930165554342.png)
+
+![image-20190930165600788](notes.assets/image-20190930165600788.png)
+
+
+
+* How to turn knowledge about leaves into y-values? 
+
+    * Take averages of all points in a leaf, and this is the value/label assigned to all of them
+
+    
+
+![image-20190930170006779](notes.assets/image-20190930170006779.png)
+
+
+
+* Any future points will follow the decision tree and be assigned the same label as the leaf they end up in
+
+![image-20190930170159700](notes.assets/image-20190930170159700.png)
+
+
+
+* These predictions can be tested against ground truth in a confusion matrix
+
+
+
+#### Code
+
+![image-20190930231240522](notes.assets/image-20190930231240522.png)
+
+
+
+* Most non-linear regression models are continuous, but this one is not
+
+![image-20190930231652775](notes.assets/image-20190930231652775.png)
+
+
+
+
+
+### Ensemble learning 
+
+- Take the same algorithm multiple times to make something more powerful 
+
+    
+
+#### Random forest regression
+
+
+
+##### Intuition 
+
+
+
+Same as decision trees: 
+
+* Non-linear regression model
+* Non-continuous regression 
+
+
+
+![image-20190930232900539](notes.assets/image-20190930232900539.png)
+
+* Usually you use 500 trees or so
+    * And average 500 predictions for the value of y
+    * So you're predicting based on a forest of trees
+
+
+
+##### Code
+
+![image-20190930233821612](notes.assets/image-20190930233821612.png)
+
+
+
+* More decision trees in forest -> more steps in the graph
+    * However there is convergence, so number of steps wont increase that much from 50 trees to 100 trees
+        * But perhaps the steps will be better chosen to make better predictions 
+
+![image-20190930234208345](notes.assets/image-20190930234208345.png)
+
+* E.g. the prediction at position level 4 is the result of averaging the 10 tree predictions for level 4
+
+
+
+As the 
+
+
+
+
+
+### Regression performance 
 
 
 
@@ -252,23 +373,9 @@ Continue watching the video at this point: 5:45: https://youtu.be/IFzVxLv0TKQ?t=
 
 
 
+## Classification
 
-
-
-
-
-
-s
-
-
-
-p  = 3
-
-Y = b0 +  (b1 * snow) *   (b2 * tmax) *  (b3* 
-
-
-
-## KNN
+### KNN
 
 
 
@@ -276,13 +383,13 @@ Y = b0 +  (b1 * snow) *   (b2 * tmax) *  (b3*
 
 
 
-## Naive Bayes
+### Naive Bayes
 
-### Bayes theorem 
+#### Bayes theorem 
 
 
 
-### Naive Bayes classifier
+#### Naive Bayes classifier
 
 
 
@@ -311,15 +418,13 @@ Once you have both probabilities, you determine which class to put the data poin
 
 
 
-### Calculating priors
+#### Calculating priors
 
 
 
 Easy, just take all the data points that are in a class and divide by the total  number of points 
 
-
-
-### Calculating marginal likelihood
+#### Calculating marginal likelihood
 
 No point will have the exact same feattures, so you can set a tthreshold instead:
 
@@ -343,9 +448,7 @@ Hence P(X) = 4/30
 
 ![image-20190917180107626](notes.assets/image-20190917180107626.png)
 
-
-
-### Calculating likelihood
+#### Calculating likelihood
 
 
 
@@ -367,11 +470,7 @@ That's just 3/10
 
 ![image-20190917180348949](notes.assets/image-20190917180348949.png)
 
-
-
-
-
-### Posterior probability
+#### Posterior probability
 
 
 
@@ -385,9 +484,7 @@ P(Drives | X) turns out to be 0.25
 
 So we can guess that the new data point, with similar features X, should be in the **walks** class
 
-
-
-### Why Naive?
+#### Why Naive?
 
 
 
@@ -397,9 +494,7 @@ E.g. we assume Age and Salary are independent, but there might be correlation be
 
 I.e. the **features are assumed to be independent of each other**
 
-
-
-### Dropping marginal likelihood
+#### Dropping marginal likelihood
 
 
 
@@ -408,22 +503,162 @@ I.e. the **features are assumed to be independent of each other**
 - At the end of the day you divide both expressions by it
 - so you can drop it! but only **for comparison purposes**. Calculating actual value requires the full expression though
 
-
-
-### More than 2 classes 
+#### More than 2 classes 
 
 
 
 - In current example, you had P(class 1 | X) and P(class 2 | X), where class 1 = walks, and class 2 = drives. The probabilities added up to 1.0 e.g. 0.75 + 0.25 = 1.0 
 - For more than 2 classes, you can do calculations in the same way, and P(class 1 | X) + P(class 2 | X) + P(class 3 | X) = 1.0
 
-
-
-### Python code
+#### Python code
 
 https://www.udemy.com/machinelearning/learn/lecture/5740200#overview
 
 ![image-20190917182521923](notes.assets/image-20190917182521923.png)  
 
 
+
+### Logistic Regression
+
+* Logistic regression is a linear classifier, even though it uses a non-linear sigmoid function 
+    * With two predictors, the result is a straight line
+    * With three predictors, it is a straight plane 
+
+
+
+### Decision tree classification
+
+
+
+![image-20190930235731586](notes.assets/image-20190930235731586.png)
+
+
+
+![image-20190930235747570](notes.assets/image-20190930235747570.png)
+
+
+
+
+
+
+
+
+
+#### Intuition
+
+![image-20190930161325032](notes.assets/image-20190930161325032.png)
+
+* simple linear regression is a straight line ($ y = b_0 + b_1x$) through the data
+
+
+
+
+
+* Logistic regression helps us fit a line through data separated into classes
+* Example, will people buy the car/take an action with increasing age?:
+
+
+
+![image-20190930161920747](notes.assets/image-20190930161920747.png)
+
+
+
+![image-20190930162055496](notes.assets/image-20190930162055496.png)
+
+
+
+* Plug the linear regression $y$ into the sigmoid function $p$ and solve for $y$
+* On the y-axis is probability $p$ and on the x-axis is the predictor
+* We can't get the true value of y, but we can predict $y^{hat}$. Anything above 50% probability is classified as being in one class
+
+![image-20190930162850035](notes.assets/image-20190930162850035.png)
+
+
+
+#### Code
+
+* Follow the classification template and do the preprocessing 
+
+
+
+![image-20190930163747375](notes.assets/image-20190930163747375.png)
+
+
+
+![image-20190930164132153](notes.assets/image-20190930164132153.png)
+
+* This is a logistic regression with two predictors: salary and age
+* Red points are people who took action/purchased SUV (class 1) and green points are people who did not (class 2)
+* The red and green regions are called "prediction regions" according to the classifier
+    * These are not fully accurate, since some ground truth red and green points are in opposite regions
+
+### Confusion matrix
+
+![image-20190930163517380](notes.assets/image-20190930163517380.png)
+
+* Parameters
+    * The true labels 
+    * The labels predicted by the classifier
+
+* Output
+
+    * ![image-20190930163648095](notes.assets/image-20190930163648095.png)
+
+    * 65 and 24 are correct
+        * True positive
+        * True negative
+    * 8 and 3 are incorrect
+        * False positive
+        * False negative
+
+
+
+### Classification template
+
+#### Import libraries
+
+#### Import data
+
+![image-20190918152852638](notes.assets/image-20190918152852638.png)
+
+
+
+* What is `[:, [2,3]]` ? The first with the colon is saying: select all rows
+* The next part with `[2,3]` is saying: the columns at indexes 2 and 3
+* For `y`, we are selecting a single dependent variable column at index 4. 
+
+#### Train test split
+
+![image-20190918153127630](notes.assets/image-20190918153127630.png)
+
+#### Feature scaling
+
+![image-20190918153208064](notes.assets/image-20190918153208064.png)
+
+
+
+* Don't scale the `y` / dependent variable
+* Maybe scale categorical variables - it might help but other times it might not make sense to do it
+* Scale the independent variables for train
+* And scale the test independent variables according to the train data
+
+
+
+
+
+
+
+## Quiz
+
+
+
+* stochastic gradient descent 
+* cross validation
+* model selection
+	* section 38 in udemy 
+* decision trees
+	* regression
+	* classification
+	* random forest
+* bias variance tradeoff
 
