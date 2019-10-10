@@ -644,6 +644,36 @@ https://www.udemy.com/machinelearning/learn/lecture/5740200#overview
 
 
 
+## Model selection
+
+
+
+### Complexity of model 
+
+
+
+![image-20191008194228433](notes.assets/image-20191008194228433.png)
+
+
+
+### K-fold cross-validation
+
+* usually we do test/train set
+* but we get variance problem:
+    * multiple test sets are needed to judge performance
+    * but we only have one test set!
+* So we split training set into k=10 folds
+    * we iterate 9 times to train the model with 9 folds
+    * we validate on the 10th fold
+
+
+
+![image-20191008194120222](notes.assets/image-20191008194120222.png)
+
+
+
+
+
 
 
 
