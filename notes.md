@@ -2,6 +2,44 @@
 
 
 
+## Taxonomy
+
+### Supervised vs Unsupervised
+
+* supervised: training data includes the labels
+  * classification
+
+
+
+### Generative vs discriminative
+
+* generative
+
+![image-20191013172916013](notes.assets/image-20191013172916013.png)
+
+
+
+* discriminative 
+  * dont try to model the underlying probability distributions
+
+![image-20191013172956845](notes.assets/image-20191013172956845.png)
+
+
+
+## Preprocessing
+
+### Splitting up a dataframe into train and test
+
+![image-20191013214006861](notes.assets/image-20191013214006861.png)
+
+
+
+- Here the 13th/last column has the labels,
+
+- The other colums have the train data.
+
+
+
 ## Regression 
 
 ### Linear Regression
@@ -644,7 +682,25 @@ https://www.udemy.com/machinelearning/learn/lecture/5740200#overview
 
 
 
-## Model selection
+## Dimensionality Reduction
+
+
+
+![image-20191013212816509](notes.assets/image-20191013212816509.png)
+
+
+
+### Feature extraction
+
+
+
+#### PCA
+
+
+
+* Preprocessing
+  * Feature scaling must be applied for it to work
+* 
 
 
 
@@ -656,7 +712,9 @@ https://www.udemy.com/machinelearning/learn/lecture/5740200#overview
 
 
 
-### K-fold cross-validation
+## K-fold cross-validation
+
+
 
 * usually we do test/train set
 * but we get variance problem:
