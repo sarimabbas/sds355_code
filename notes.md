@@ -1,3 +1,5 @@
+
+
 # SDS 355 Notes 
 
 
@@ -423,7 +425,33 @@ As the
 
 ### Naive Bayes
 
-#### Bayes theorem 
+
+
+#### Bayesian reasoning and inference
+
+
+
+- priors are base rates i.e. proportions of populations e.g. spanners produced by factory A and spanners produced by factory B
+- likelihoods are percentage likelihoods for each thing to exhibit a characteristic. e.g. likelihood of spannner being faulty given its from A
+
+
+
+#####  The inference dichotomy / philosophy
+
+- how tto model the quantity that is unknown?
+  1. a quantity has a certain value which is definite. there is nothig random about it and the goal is to figure it out. e.g. trying to find out the mass of an electron. this is a real numbeer and not a random variable
+
+![image-20191030214345119](notes.assets/image-20191030214345119.png)
+
+2. Anything that you don't know should be modelled as a random variable. You can have a vague sense of the mass of electron. You can have a prior distribution on the mass of an electron. It doesnt mean that nature is random, but rather that you are unsure which values it could ttake. How could you figure out what the actual number might be?
+   1. first you model your prior beliefs THETA. also called base rate.
+   2. Then observed some related random variable / characteristic called X through some measuring apparatus.
+      1. X on its own called marginal likelihood
+      2. X given theta is called likelihood
+   3. And then you use this to create an estimate THETA pred
+   4. Use bayes rule: based on X
+
+
 
 
 
@@ -727,6 +755,22 @@ https://www.udemy.com/machinelearning/learn/lecture/5740200#overview
 
 
 ![image-20191008194120222](notes.assets/image-20191008194120222.png)
+
+
+
+## Noisy signal problem
+
+
+
+You want to recover the original signal S from the observation X. 
+
+
+
+![image-20191030213559231](notes.assets/image-20191030213559231.png)
+
+
+
+Alternatively you might want to model the attenuation  i.e. a systeem identification problem.
 
 
 
