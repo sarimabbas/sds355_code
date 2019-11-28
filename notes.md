@@ -774,9 +774,72 @@ Alternatively you might want to model the attenuation  i.e. a systeem identifica
 
 
 
+## Neural networks
 
 
 
+### Activation functions
+
+
+
+As the input value increases, the functions "activates"
+
+
+
+![image-20191117160732068](notes.assets/image-20191117160732068.png)
+
+![image-20191117160802507](notes.assets/image-20191117160802507.png)
+
+![image-20191117160823452](notes.assets/image-20191117160823452.png)
+
+Tanh is similar to sigmoid but shifted y axis
+
+
+
+Usually, ReLu for hidden layers, and sigmoid for output layer
+
+
+
+### Forward prop
+
+
+
+Input layer consists of different parameters/features
+
+
+
+- Traditional ML e.g. linear regression
+
+![image-20191117161249786](notes.assets/image-20191117161249786.png)
+
+
+
+- Neural nets are special because they have hidden layers 
+
+
+
+### Cost function
+
+
+
+![image-20191117215552745](notes.assets/image-20191117215552745.png)
+
+
+
+- Each row is fed into the same network one by one (8 rows fed in === 1 epoch)
+- The cost function is calculated for all the predicted vs true outputs 
+
+- We want to minimize the cost function to 0 by updating the weights
+
+
+
+Do multiple epochs to finely adjust the weights 
+
+
+
+### Gradient descent
+
+Stochastic: do it in batches 
 
 
 
